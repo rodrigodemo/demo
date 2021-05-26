@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-deploy
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: demo-world
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: demo-world
+    spec:
+      containers:
+      - name: demo-pod
+        image: rodrigodemo/web
+        ports:
+        - containerPort: 8080
